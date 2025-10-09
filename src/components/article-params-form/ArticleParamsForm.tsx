@@ -29,7 +29,7 @@ export const ArticleParamsForm = ({
 	onReset,
 	currentState,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [selectedFont, setSelectedFont] = useState(
 		defaultArticleState.fontFamilyOption
 	);
@@ -57,13 +57,13 @@ export const ArticleParamsForm = ({
 	}, [currentState]);
 
 	const toggleSidebar = () => {
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	useOutsideClickClose({
-		isOpen,
+		isOpen: isMenuOpen,
 		rootRef: sidebarRef,
-		onChange: setIsOpen,
+		onChange: setIsMenuOpen,
 	});
 
 	const handleSubmitClick = (event: React.FormEvent) => {
@@ -76,7 +76,7 @@ export const ArticleParamsForm = ({
 			contentWidth: selectedContentWidthArr,
 		};
 		onSubmit(newState);
-		setIsOpen(false);
+		setIsMenuOpen(false);
 	};
 
 	const handleResetClick = () => {
@@ -86,13 +86,13 @@ export const ArticleParamsForm = ({
 		setSelectedBackgroundColor(defaultArticleState.backgroundColor);
 		setSelectedContentWidthArr(defaultArticleState.contentWidth);
 		onReset();
-		setIsOpen(false);
+		setIsMenuOpen(false);
 	};
 
 	return (
 		<>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onClick={() => {
 					toggleSidebar();
 				}}
@@ -101,7 +101,7 @@ export const ArticleParamsForm = ({
 				ref={sidebarRef}
 				className={clsx({
 					[styles.container]: true,
-					[styles.container_open]: isOpen,
+					[styles.container_open]: isMenuOpen,
 				})}>
 				<form className={styles.form} onSubmit={handleSubmitClick}>
 					<Text weight={800} size={31} uppercase>
